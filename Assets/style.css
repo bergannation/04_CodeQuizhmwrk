@@ -33,7 +33,7 @@ body {
 .grid #question {
   font-family: "monospace";
   font-size: 30px;
-  color: #01bbff;
+  color: black;
 }
 
 .buttons {
@@ -44,10 +44,10 @@ body {
 #btn1,
 #btn2,
 #btn3 {
-  background-color: #d3b81e;
+  background-color: gold;
   width: 250px;
   font-size: 20px;
-  color: #fff;
+  color: black;
   border: 1px solid #1d3c6a;
   margin: 10px 40px 10px 0px;
   padding: 10px 10px;
@@ -58,7 +58,7 @@ body {
 #btn2:hover,
 #btn3:hover {
   cursor: pointer;
-  background-color: #01bbff;
+  background-color: lightgray;
 }
 
 #btn0:focus,
