@@ -23,7 +23,11 @@ var button2 = document.querySelector("#btn2");
 var button3 = document.querySelector("#btn3");
 var questionHeader = document.querySelector("#question");
 
-var secondsLeft = 76;
+var imgEl = document.createElement("img");
+imgEl.setAttribute("src", "assets/timesup.jfif");
+imgEl.setAttribute("style", "height: 400px; width: 600px;");
+
+var secondsLeft = 5;
 var chosenOption = 0;
 var questionNumber = 0;
 
@@ -48,10 +52,8 @@ function sendMessage() {
   for (var i = 0; i < buttonList.children.length; i++) {
     buttonList.children[i].setAttribute("style", "display: none;");
   }
-  var imgEl = document.createElement("img");
-  imgEl.setAttribute("src", "assets/timesup.jfif");
-  imgEl.setAttribute("style", "height: 400px; width: 400px;");
-  quizEl.appendChild(imgEl);
+
+  buttonList.appendChild(imgEl);
 }
 
 // my questions listed out in variable form with answers and the correct answer
@@ -174,6 +176,11 @@ function resetQuiz() {
   questionNumber = 0;
   chosenOption = 0;
   Quiz(questionNumber);
+
+  for (var i = 0; i < buttonList.children.length; i++) {
+    buttonList.children[i].setAttribute("style", "display: inline-block;");
+  }
+  imgEl.remove();
 }
 
 //need to get start button to populate the questions
