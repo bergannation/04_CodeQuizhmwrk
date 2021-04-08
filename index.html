@@ -20,8 +20,10 @@
         <hr style="margin-bottom: 20px" />
         <div id="buttons">
           <button class="start-button">Start Quiz</button>
-          <button class="button" id="reset">Reset</button>
-          <button class="button" id="resetLeader">Reset Leaderboard</button>
+          <button class="resetbutton" id="reset">Reset Quiz</button>
+          <button class="resetbutton" id="resetLeader">
+            Reset Leaderboard
+          </button>
         </div>
 
         <p id="question"></p>
@@ -36,20 +38,24 @@
         <hr style="margin-top: 50px" />
         <footer>
           <p id="progress">Question x of y</p>
+          <section id="leaderboard">
+            <ol></ol>
+            <div id="records">
+              <form>
+                <label for="initials">Initials:</label>
+                <input
+                  type="text"
+                  id="initials"
+                  name="initials"
+                  maxlength="3"
+                />
+              </form>
+              <button class="button" id="save">Save</button>
+            </div>
+            <p>click 'View Highscores' or 'Reset' to close window</p>
+          </section>
         </footer>
       </div>
-    </section>
-
-    <section id="leaderboard">
-      <ol></ol>
-      <div id="records">
-        <form>
-          <label for="initials">Initials:</label>
-          <input type="text" id="initials" name="initials" maxlength="3" />
-        </form>
-        <button class="button" id="save">Save</button>
-      </div>
-      <p>click 'View Highscores' or 'Reset' to close window</p>
     </section>
 
     <script src="Assets/script.js"></script>

@@ -11,6 +11,7 @@ var timeEl = document.querySelector(".time");
 var quizEl = document.querySelector(".grid");
 var bodyEl = document.querySelectorAll("body");
 var startButton = document.querySelector(".start-button");
+var resetButton = document.querySelector("#reset");
 var buttonList = document.querySelector(".buttons");
 var option0 = document.querySelector("#option0");
 var option1 = document.querySelector("#option1");
@@ -49,7 +50,7 @@ function sendMessage() {
   }
   var imgEl = document.createElement("img");
   imgEl.setAttribute("src", "assets/timesup.jfif");
-  imgEl.setAttribute("style", "height: 800px; width: 800px;");
+  imgEl.setAttribute("style", "height: 400px; width: 400px;");
   quizEl.appendChild(imgEl);
 }
 
@@ -166,7 +167,14 @@ function showProgress() {
 }
 
 startButton.addEventListener("click", setTime);
+resetButton.addEventListener("click", resetQuiz);
 Quiz(questionNumber);
+
+function resetQuiz() {
+  questionNumber = 0;
+  chosenOption = 0;
+  Quiz(questionNumber);
+}
 
 //need to get start button to populate the questions
 // need to get the final results in highscores section
