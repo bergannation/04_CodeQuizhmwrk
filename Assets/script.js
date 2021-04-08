@@ -10,6 +10,8 @@
 var timeEl = document.querySelector(".time");
 var quizEl = document.querySelector(".grid");
 var bodyEl = document.querySelectorAll("body");
+var resultsEl = document.querySelector("#quiz");
+var leaderboard = document.querySelector("#leaderboard");
 var startButton = document.querySelector(".start-button");
 var resetButton = document.querySelector("#reset");
 var buttonList = document.querySelector(".buttons");
@@ -105,10 +107,20 @@ var question5 = {
 var questionsArray = [question1, question2, question3, question4, question5];
 
 function nextQuestion() {
-  if (questionNumber < 5) {
+  if (questionNumber < 4) {
     questionNumber++;
     Quiz(questionNumber);
+  } else {
+    showScores();
   }
+}
+function showScores(scores) {
+  var gameOverHTML = "<h1>RESULTS</h1>";
+  gameOverHTML +=
+    "<h2 id='score'> Your score: " + (questionNumber + 1) + "</h2>";
+  resultsEl.innerHTML = gameOverHTML;
+  resultsEl.appendChild(leaderboard);
+  resultsEl.appendChild(resetButton);
 }
 
 function Quiz(array) {
