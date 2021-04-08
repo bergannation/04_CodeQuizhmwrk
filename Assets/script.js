@@ -22,13 +22,14 @@ var button1 = document.querySelector("#btn1");
 var button2 = document.querySelector("#btn2");
 var button3 = document.querySelector("#btn3");
 var questionHeader = document.querySelector("#question");
-questionHeader.setAttribute("style", "display: none;");
-buttonList.setAttribute("style", "display: none;");
+
 var imgEl = document.createElement("img");
 imgEl.setAttribute("src", "assets/timesup.jfif");
 imgEl.setAttribute("style", "height: 400px; width: 600px;");
+questionHeader.setAttribute("style", "display: none;");
+buttonList.setAttribute("style", "display: none;");
 
-var secondsLeft = 3;
+var secondsLeft = 75;
 var wrongAnswer = -5;
 var chosenOption = 0;
 var questionNumber = 0;
@@ -107,7 +108,6 @@ function nextQuestion() {
   if (questionNumber < 5) {
     questionNumber++;
     Quiz(questionNumber);
-  } else {
   }
 }
 
@@ -165,29 +165,31 @@ function isAnswerCorrect() {
     return;
   }
 }
-function showProgress() {
-  var current = questionNumber + 1;
-  var element = document.getElementById("progress");
-  element.innerHTML = "Question " + current + " of " + questionsArray.length;
-}
 
-startButton.addEventListener("click", function (event) {
-  questionHeader.setAttribute("style", "display: block;");
-  buttonList.setAttribute("style", "display: block;");
-  setTime(event);
-});
 resetButton.addEventListener("click", resetQuiz);
-Quiz(questionNumber);
 
 function resetQuiz() {
   buttonList.setAttribute("style", "display: none;");
   questionHeader.setAttribute("style", "display: none;");
   questionNumber = 0;
   chosenOption = 0;
-  Quiz(questionNumber);
-
   imgEl.remove();
 }
+startButton.addEventListener("click", function (event) {
+  Quiz(questionNumber);
+  setTime(event);
+  questionHeader.setAttribute("style", "display: block;");
+  buttonList.setAttribute("style", "display: inline-block;");
+});
 
-//need to get start button to populate the questions
+// Show progress on Questions
+function showProgress() {
+  var current = questionNumber + 1;
+  var element = document.getElementById("progress");
+  element.innerHTML = "Question " + current + " of " + questionsArray.length;
+}
+
+//start button works on its initial target, but after we reset quiz, it doesn't work properly
 // need to get the final results in highscores section
+
+//the timer will multiply and deduct faster if the start button is hit multiple times
