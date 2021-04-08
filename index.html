@@ -47,15 +47,20 @@
                   name="initials"
                   maxlength="3"
                 />
+                <label for="scores">Score:</label>
+                <input type="number" id="scores" name="scores" maxlength="1" />
+                <button class="button" id="save">Save</button>
               </form>
-              <button class="button" id="save">Save</button>
             </div>
-            <a class="highscores" href="">View highscores</a>
-            <p>Click 'View Highscores' or 'Reset Quiz' to try again</p>
           </section>
         </footer>
       </div>
     </section>
+    <div class="card">
+      <h2>Highscores</h2>
+      <p><strong>Initials:</strong> <span id="userInitials"></span></p>
+      <p><strong>Score:</strong> <span id="userScore"></span></p>
+    </div>
 
     <script src="Assets/script.js"></script>
   </body>

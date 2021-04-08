@@ -12,8 +12,10 @@ var quizEl = document.querySelector(".grid");
 var bodyEl = document.querySelectorAll("body");
 var resultsEl = document.querySelector("#quiz");
 var leaderboard = document.querySelector("#leaderboard");
+var records = document.querySelector("#records");
 var startButton = document.querySelector(".start-button");
 var resetButton = document.querySelector("#reset");
+var saveButton = document.querySelector("#save");
 var buttonList = document.querySelector(".buttons");
 var option0 = document.querySelector("#option0");
 var option1 = document.querySelector("#option1");
@@ -31,10 +33,12 @@ imgEl.setAttribute("style", "height: 400px; width: 600px;");
 questionHeader.setAttribute("style", "display: none;");
 buttonList.setAttribute("style", "display: none;");
 
-var secondsLeft = 75;
+var secondsLeft = 73;
 var wrongAnswer = -5;
 var chosenOption = 0;
 var questionNumber = 0;
+var score = 0;
+var highscore = localStorage.getItem("highscore");
 
 // My timer function that will start the timer at 75 seconds when the event listener is clicked
 function setTime(event) {
@@ -59,6 +63,7 @@ function sendMessage() {
   }
 
   buttonList.appendChild(imgEl);
+  showScores();
 }
 
 // my questions listed out in variable form with answers and the correct answer
@@ -113,14 +118,6 @@ function nextQuestion() {
   } else {
     showScores();
   }
-}
-function showScores(scores) {
-  var gameOverHTML = "<h1>RESULTS</h1>";
-  gameOverHTML +=
-    "<h2 id='score'> Your score: " + (questionNumber + 1) + "</h2>";
-  resultsEl.innerHTML = gameOverHTML;
-  resultsEl.appendChild(leaderboard);
-  resultsEl.appendChild(resetButton);
 }
 
 function Quiz(array) {
@@ -178,20 +175,27 @@ function isAnswerCorrect() {
   }
 }
 
-resetButton.addEventListener("click", resetQuiz);
+resetButton.addEventListener("click", function () {
+  window.location.reload();
+});
 
-function resetQuiz() {
-  buttonList.setAttribute("style", "display: none;");
-  questionHeader.setAttribute("style", "display: none;");
-  questionNumber = 0;
-  chosenOption = 0;
-  imgEl.remove();
-}
 startButton.addEventListener("click", function (event) {
   Quiz(questionNumber);
   setTime(event);
   questionHeader.setAttribute("style", "display: block;");
   buttonList.setAttribute("style", "display: inline-block;");
+});
+
+saveButton.addEventListener("click", function (event) {
+  event.preventDefault;
+  event.stopPropagation;
+
+  var scores = document.querySelector("#scores").value;
+  var initials = document.querySelector("#initials").value;
+
+  localStorage.setItem("scores", scores);
+  localStorage.setItem("initials", initials);
+  saveLastRegistered();
 });
 
 // Show progress on Questions
@@ -201,7 +205,24 @@ function showProgress() {
   element.innerHTML = "Question " + current + " of " + questionsArray.length;
 }
 
-//start button works on its initial target, but after we reset quiz, it doesn't work properly
+function showScores() {
+  var gameOverHTML = "<h1>RESULTS</h1>";
+  gameOverHTML +=
+    "<h2 id='scoreHeader'> Your score: " + (questionNumber + 1) + "</h2>";
+  resultsEl.innerHTML = gameOverHTML;
+
+  resultsEl.appendChild(leaderboard);
+  resultsEl.appendChild(resetButton);
+}
+
+function saveLastRegistered() {
+  var score = localStorage.getItem("#scores");
+  var initial = localStorage.getItem("#initials");
+
+  userScore.textContent = score;
+  userInitials.textContent = initial;
+}
+
 // need to get the final results in highscores section
 
 //the timer will multiply and deduct faster if the start button is hit multiple times
