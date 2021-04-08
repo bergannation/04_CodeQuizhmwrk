@@ -18,7 +18,11 @@
       <div id="quiz">
         <h1>Coding Quiz Challenge</h1>
         <hr style="margin-bottom: 20px" />
-        <button id="start-button">Start Quiz</button>
+        <div id="buttons">
+          <button class="start-button">Start Quiz</button>
+          <button class="button" id="reset">Reset</button>
+          <button class="button" id="resetLeader">Reset Leaderboard</button>
+        </div>
 
         <p id="question"></p>
 
@@ -34,6 +38,18 @@
           <p id="progress">Question x of y</p>
         </footer>
       </div>
+    </section>
+
+    <section id="leaderboard">
+      <ol></ol>
+      <div id="records">
+        <form>
+          <label for="initials">Initials:</label>
+          <input type="text" id="initials" name="initials" maxlength="3" />
+        </form>
+        <button class="button" id="save">Save</button>
+      </div>
+      <p>click 'View Highscores' or 'Reset' to close window</p>
     </section>
 
     <script src="Assets/script.js"></script>

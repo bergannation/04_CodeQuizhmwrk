@@ -8,8 +8,10 @@
 
 //Variables that will target my HTML page
 var timeEl = document.querySelector(".time");
-var bodyEl = document.querySelector(".grid");
-var startButton = document.querySelector("#start-button");
+var quizEl = document.querySelector(".grid");
+var bodyEl = document.querySelectorAll("body");
+var startButton = document.querySelector(".start-button");
+var buttonList = document.querySelector(".buttons");
 var option0 = document.querySelector("#option0");
 var option1 = document.querySelector("#option1");
 var option2 = document.querySelector("#option2");
@@ -20,16 +22,18 @@ var button2 = document.querySelector("#btn2");
 var button3 = document.querySelector("#btn3");
 var questionHeader = document.querySelector("#question");
 
-var secondsLeft = 75;
+var secondsLeft = 76;
 var chosenOption = 0;
-var currentQuestionNumber = 0;
+var questionNumber = 0;
 
+// My timer function that will start the timer at 75 seconds when the event listener is clicked
 function setTime(event) {
   event.preventDefault();
 
   var timerInterval = setInterval(function () {
     secondsLeft--;
     timeEl.textContent = "Time: " + secondsLeft;
+    timeEl.setAttribute("style", "font-size: 40px; text-align: right;");
 
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
@@ -39,9 +43,14 @@ function setTime(event) {
 }
 function sendMessage() {
   timeEl.textContent = " ";
+  questionHeader.textContent = "OUT OF TIME";
+  for (var i = 0; i < buttonList.children.length; i++) {
+    buttonList.children[i].setAttribute("style", "display: none;");
+  }
   var imgEl = document.createElement("img");
   imgEl.setAttribute("src", "assets/timesup.jfif");
-  bodyEl.appendChild(imgEl);
+  imgEl.setAttribute("style", "height: 800px; width: 800px;");
+  quizEl.appendChild(imgEl);
 }
 
 // my questions listed out in variable form with answers and the correct answer
@@ -89,16 +98,16 @@ var question5 = {
 
 var questionsArray = [question1, question2, question3, question4, question5];
 
-// My timer function that will start the timer at 75 seconds when the event listener is clicked
-
 function nextQuestion() {
-  if (currentQuestionNumber < 8) {
-    currentQuestionNumber++;
-    Quiz(currentQuestionNumber);
+  if (questionNumber < 5) {
+    questionNumber++;
+    Quiz(questionNumber);
+  } else {
   }
 }
 
 function Quiz(array) {
+  console.log("questionNumber", questionNumber);
   currentQuestion = questionsArray[array];
   populateQuestion();
   showProgress();
@@ -151,13 +160,13 @@ function isAnswerCorrect() {
   }
 }
 function showProgress() {
-  var current = currentQuestionNumber + 1;
+  var current = questionNumber + 1;
   var element = document.getElementById("progress");
   element.innerHTML = "Question " + current + " of " + questionsArray.length;
 }
 
 startButton.addEventListener("click", setTime);
-Quiz(currentQuestionNumber);
+Quiz(questionNumber);
 
 //need to get start button to populate the questions
 // need to get the final results in highscores section
