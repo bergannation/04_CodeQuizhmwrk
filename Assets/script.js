@@ -22,12 +22,14 @@ var button1 = document.querySelector("#btn1");
 var button2 = document.querySelector("#btn2");
 var button3 = document.querySelector("#btn3");
 var questionHeader = document.querySelector("#question");
-
+questionHeader.setAttribute("style", "display: none;");
+buttonList.setAttribute("style", "display: none;");
 var imgEl = document.createElement("img");
 imgEl.setAttribute("src", "assets/timesup.jfif");
 imgEl.setAttribute("style", "height: 400px; width: 600px;");
 
-var secondsLeft = 5;
+var secondsLeft = 3;
+var wrongAnswer = -5;
 var chosenOption = 0;
 var questionNumber = 0;
 
@@ -158,7 +160,8 @@ function isAnswerCorrect() {
     alert("CORRECT ANSWER");
     nextQuestion();
   } else {
-    alert("WRONG ANSWER");
+    alert("WRONG ANSWER-5 seconds deducted");
+    secondsLeft += wrongAnswer;
     return;
   }
 }
@@ -168,18 +171,21 @@ function showProgress() {
   element.innerHTML = "Question " + current + " of " + questionsArray.length;
 }
 
-startButton.addEventListener("click", setTime);
+startButton.addEventListener("click", function (event) {
+  questionHeader.setAttribute("style", "display: block;");
+  buttonList.setAttribute("style", "display: block;");
+  setTime(event);
+});
 resetButton.addEventListener("click", resetQuiz);
 Quiz(questionNumber);
 
 function resetQuiz() {
+  buttonList.setAttribute("style", "display: none;");
+  questionHeader.setAttribute("style", "display: none;");
   questionNumber = 0;
   chosenOption = 0;
   Quiz(questionNumber);
 
-  for (var i = 0; i < buttonList.children.length; i++) {
-    buttonList.children[i].setAttribute("style", "display: inline-block;");
-  }
   imgEl.remove();
 }
 
