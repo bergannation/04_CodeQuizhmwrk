@@ -16,6 +16,8 @@ var records = document.querySelector("#records");
 var startButton = document.querySelector(".start-button");
 var resetButton = document.querySelector("#reset");
 var saveButton = document.querySelector("#save");
+var userScoreSpan = document.querySelector("#userScore");
+var userInitialSpan = document.querySelector("#userInitials");
 var buttonList = document.querySelector(".buttons");
 var option0 = document.querySelector("#option0");
 var option1 = document.querySelector("#option1");
@@ -176,7 +178,7 @@ function isAnswerCorrect() {
 }
 
 resetButton.addEventListener("click", function () {
-  window.location.reload();
+  location.reload();
 });
 
 startButton.addEventListener("click", function (event) {
@@ -184,18 +186,6 @@ startButton.addEventListener("click", function (event) {
   setTime(event);
   questionHeader.setAttribute("style", "display: block;");
   buttonList.setAttribute("style", "display: inline-block;");
-});
-
-saveButton.addEventListener("click", function (event) {
-  event.preventDefault;
-  event.stopPropagation;
-
-  var scores = document.querySelector("#scores").value;
-  var initials = document.querySelector("#initials").value;
-
-  localStorage.setItem("scores", scores);
-  localStorage.setItem("initials", initials);
-  saveLastRegistered();
 });
 
 // Show progress on Questions
@@ -216,13 +206,24 @@ function showScores() {
 }
 
 function saveLastRegistered() {
-  var score = localStorage.getItem("#scores");
-  var initial = localStorage.getItem("#initials");
-
-  userScore.textContent = score;
-  userInitials.textContent = initial;
+  var score1 = localStorage.getItem("scores");
+  userScoreSpan.textContent = score1;
+  var initial1 = localStorage.getItem("initials");
+  userInitialSpan.textContent = initial1;
 }
+saveButton.addEventListener("click", function (event) {
+  event.preventDefault;
+  event.stopPropagation;
 
-// need to get the final results in highscores section
+  var score1 = document.querySelector("#scores").value;
+  var initial1 = document.querySelector("#initials").value;
+
+  localStorage.setItem("scores", score1);
+  localStorage.setItem("initials", initial1);
+  saveLastRegistered();
+});
+
+saveLastRegistered();
+// need to get the final results in highscores section to compile instead of listing just one
 
 //the timer will multiply and deduct faster if the start button is hit multiple times
