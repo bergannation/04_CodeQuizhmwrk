@@ -24,6 +24,26 @@ var secondsLeft = 75;
 var chosenOption = 0;
 var currentQuestionNumber = 0;
 
+function setTime(event) {
+  event.preventDefault();
+
+  var timerInterval = setInterval(function () {
+    secondsLeft--;
+    timeEl.textContent = "Time: " + secondsLeft;
+
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+      sendMessage();
+    }
+  }, 1000);
+}
+function sendMessage() {
+  timeEl.textContent = " ";
+  var imgEl = document.createElement("img");
+  imgEl.setAttribute("src", "assets/timesup.jfif");
+  bodyEl.appendChild(imgEl);
+}
+
 // my questions listed out in variable form with answers and the correct answer
 var question1 = {
   question: "What does HTML stand for?",
@@ -70,25 +90,6 @@ var question5 = {
 var questionsArray = [question1, question2, question3, question4, question5];
 
 // My timer function that will start the timer at 75 seconds when the event listener is clicked
-function setTime(event) {
-  event.preventDefault();
-
-  var timerInterval = setInterval(function () {
-    secondsLeft--;
-    timeEl.textContent = "Time: " + secondsLeft;
-
-    if (secondsLeft === 0) {
-      clearInterval(timerInterval);
-      sendMessage();
-    }
-  }, 1000);
-}
-function sendMessage() {
-  timeEl.textContent = " ";
-  var imgEl = document.createElement("img");
-  imgEl.setAttribute("src", "assets/timesup.jfif");
-  bodyEl.appendChild(imgEl);
-}
 
 function nextQuestion() {
   if (currentQuestionNumber < 8) {
@@ -99,11 +100,11 @@ function nextQuestion() {
 
 function Quiz(array) {
   currentQuestion = questionsArray[array];
-  populateCurrentQuestion();
+  populateQuestion();
   showProgress();
 }
 
-function populateCurrentQuestion() {
+function populateQuestion() {
   questionHeader.textContent = currentQuestion.question;
   option0.textContent = currentQuestion.answer1;
   option1.textContent = currentQuestion.answer2;
