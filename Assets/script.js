@@ -12,9 +12,11 @@ var quizEl = document.querySelector(".grid");
 var bodyEl = document.querySelectorAll("body");
 var resultsEl = document.querySelector("#quiz");
 var leaderboard = document.querySelector("#leaderboard");
+var scoreboard = document.querySelector("#scoreboard");
 var records = document.querySelector("#records");
 var startButton = document.querySelector(".start-button");
 var resetButton = document.querySelector("#reset");
+var resetLeader = document.querySelector("#resetLeader");
 var saveButton = document.querySelector("#save");
 var userScoreSpan = document.querySelector("#userScore");
 var userInitialSpan = document.querySelector("#userInitials");
@@ -29,13 +31,16 @@ var button2 = document.querySelector("#btn2");
 var button3 = document.querySelector("#btn3");
 var questionHeader = document.querySelector("#question");
 
-var imgEl = document.createElement("img");
-imgEl.setAttribute("src", "assets/timesup.jfif");
-imgEl.setAttribute("style", "height: 400px; width: 600px;");
-questionHeader.setAttribute("style", "display: none;");
+questionHeader.textContent =
+  "Try to answer the following Javascript code related questions within the time limit. Please keep in mind that incorrect answers will penalize your scoretime by 5 seconds. Click the 'Start Quiz' button when you are ready. You will have 75 seconds to complete.";
+questionHeader.setAttribute(
+  "style",
+  "font-size: 20px; text-align: center; color: red;"
+);
 buttonList.setAttribute("style", "display: none;");
 
-var secondsLeft = 73;
+var timerInterval;
+var secondsLeft = 20;
 var wrongAnswer = -5;
 var chosenOption = 0;
 var questionNumber = 0;
@@ -45,17 +50,18 @@ var highscore = localStorage.getItem("highscore");
 // My timer function that will start the timer at 75 seconds when the event listener is clicked
 function setTime(event) {
   event.preventDefault();
+  if (!timerInterval) {
+    timerInterval = setInterval(function () {
+      secondsLeft--;
+      timeEl.textContent = "Time: " + secondsLeft;
+      timeEl.setAttribute("style", "font-size: 40px; text-align: right;");
 
-  var timerInterval = setInterval(function () {
-    secondsLeft--;
-    timeEl.textContent = "Time: " + secondsLeft;
-    timeEl.setAttribute("style", "font-size: 40px; text-align: right;");
-
-    if (secondsLeft === 0) {
-      clearInterval(timerInterval);
-      sendMessage();
-    }
-  }, 1000);
+      if (secondsLeft === 0) {
+        clearInterval(timerInterval);
+        sendMessage();
+      }
+    }, 1000);
+  } else return;
 }
 function sendMessage() {
   timeEl.textContent = " ";
@@ -63,35 +69,36 @@ function sendMessage() {
   for (var i = 0; i < buttonList.children.length; i++) {
     buttonList.children[i].setAttribute("style", "display: none;");
   }
-
-  buttonList.appendChild(imgEl);
   showScores();
 }
 
 // my questions listed out in variable form with answers and the correct answer
 var question1 = {
-  question: "What does HTML stand for?",
-  answer1: "Hypertext Markup Language",
-  answer2: "Cascading style sheets",
-  answer3: "Javascript",
-  answer4: "None of the above",
-  correctAnswer: "Hypertext Markup Language",
-};
-var question2 = {
-  question: "Which computer language structures all webpages on the internet?",
-  answer1: "Java",
+  question:
+    "What language enables web pages to be interactive and dynamic with the end-user?",
+  answer1: "HTML",
   answer2: "CSS",
   answer3: "Javascript",
-  answer4: "HTML",
-  correctAnswer: "HTML",
+  answer4: "None of the above",
+  correctAnswer: "Javascript",
+};
+var question2 = {
+  question:
+    "True/False statements are a type of variable that can be evaluated as a _____?",
+  answer1: "String",
+  answer2: "Number",
+  answer3: "Object",
+  answer4: "Boolean",
+  correctAnswer: "Boolean",
 };
 var question3 = {
-  question: "Which language is used for styling webpages?",
-  answer1: "Python",
-  answer2: "C++",
-  answer3: "Javascript",
-  answer4: "CSS",
-  correctAnswer: "CSS",
+  question:
+    "Which operator do we use when we want strict equality, of type and value?",
+  answer1: "===",
+  answer2: "<=",
+  answer3: "==",
+  answer4: "i++",
+  correctAnswer: "===",
 };
 var question4 = {
   question:
@@ -188,6 +195,12 @@ startButton.addEventListener("click", function (event) {
   buttonList.setAttribute("style", "display: inline-block;");
 });
 
+resetLeader.addEventListener("click", function (event) {
+  var score1 = localStorage.getItem("scores");
+  userScoreSpan.textContent = "";
+  var initial1 = localStorage.getItem("initials");
+  userInitialSpan.textContent = "";
+});
 // Show progress on Questions
 function showProgress() {
   var current = questionNumber + 1;
@@ -197,9 +210,9 @@ function showProgress() {
 
 function showScores() {
   var gameOverHTML = "<h1>RESULTS</h1>";
-  gameOverHTML +=
-    "<h2 id='scoreHeader'> Your score: " + (questionNumber + 1) + "</h2>";
+  gameOverHTML += "<h2 id='scoreHeader'> Your score: " + secondsLeft + "</h2>";
   resultsEl.innerHTML = gameOverHTML;
+  clearInterval(timerInterval);
 
   resultsEl.appendChild(leaderboard);
   resultsEl.appendChild(resetButton);
@@ -207,10 +220,14 @@ function showScores() {
 
 function saveLastRegistered() {
   var score1 = localStorage.getItem("scores");
-  userScoreSpan.textContent = score1;
+  console.log(score1);
+  userScoreSpan.innerHTML = score1;
+
   var initial1 = localStorage.getItem("initials");
-  userInitialSpan.textContent = initial1;
+  console.log(initial1);
+  userInitialSpan.innerHTML = initial1;
 }
+
 saveButton.addEventListener("click", function (event) {
   event.preventDefault;
   event.stopPropagation;
@@ -222,8 +239,4 @@ saveButton.addEventListener("click", function (event) {
   localStorage.setItem("initials", initial1);
   saveLastRegistered();
 });
-
 saveLastRegistered();
-// need to get the final results in highscores section to compile instead of listing just one
-
-//the timer will multiply and deduct faster if the start button is hit multiple times

@@ -6,6 +6,10 @@ body {
   background-color: tan;
 }
 
+#buttons {
+  display: flex;
+  justify-content: space-between;
+}
 .grid {
   width: 700px;
   height: 700px;
@@ -13,10 +17,11 @@ body {
   background-color: #fff;
   padding: 10px 50px 50px 50px;
   border: 2px solid #cbcbcb;
+  border-radius: 10px;
 }
 .card {
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 400px;
   margin: 0 auto;
   background-color: #fff;
   border: 10px solid #cbcbcb;
@@ -69,7 +74,20 @@ body {
   margin: 10px 40px 10px 0px;
   padding: 10px 10px;
 }
-
+.start-button {
+  background-color: black;
+  color: white;
+  border-radius; 10px;
+}
+.resetbutton {
+  background-color: black;
+  color: white;
+  border-radius; 10px;
+}
+.button {
+  background-color: black;
+  color: white;
+}
 #btn0:hover,
 #btn1:hover,
 #btn2:hover,
