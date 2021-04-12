@@ -40,7 +40,7 @@ questionHeader.setAttribute(
 buttonList.setAttribute("style", "display: none;");
 
 var timerInterval;
-var secondsLeft = 20;
+var secondsLeft = 76;
 var wrongAnswer = -5;
 var chosenOption = 0;
 var questionNumber = 0;
